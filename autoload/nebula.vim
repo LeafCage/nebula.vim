@@ -90,17 +90,32 @@ function! nebula#put_lazy() "{{{
   return elements
 endfunction
 "}}}
-function! nebula#put_config() "{{{
+function! nebula#put_config(is_lazy) "{{{
   let bundle = nebula#get_bundle()
   if bundle == {}
     return {}
   endif
   let [nb_options, elements] = nebula#fetch_options(bundle)
-  let nb_options.lazy = 1
-  let bundlename = bundle.name
-  let line = printf('call neobundle#config(''%s'', %s)', bundlename, string(nb_options))
+  if a:is_lazy
+    let nb_options.lazy = 1
+  endif
+  let line = printf('call neobundle#config(''%s'', %s)', bundle.name, string(nb_options))
   call append('.', line)
   norm! +
+  return elements
+endfunction
+"}}}
+function! nebula#yank_options(is_lazy) "{{{
+  let bundle = nebula#get_bundle()
+  if bundle == {}
+    return {}
+  endif
+  let [nb_options, elements] = nebula#fetch_options(bundle)
+  if a:is_lazy
+    let nb_options.lazy = 1
+  endif
+  let @" = string(nb_options)
+  ec 'Yanked : '. @"
   return elements
 endfunction
 "}}}

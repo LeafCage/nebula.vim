@@ -64,13 +64,20 @@ https://github.com/LeafCage/nebula.vim
 	|nebula#put_lazy()|を呼びます。
 
 
-:NebulaPutCongig				*:NebulaPutCongig*
+:NebulaPutCongig[!]				*:NebulaPutCongig*
 	|nebula#put_config()|を呼びます。
+	!付きだと出力に{"lazy": 1}が加わります。
+
+
+:NebulaYankOptions[!]				*:NebulaYankOptions*
+	|nebula#yank_options()|を呼びます。
+	!付きだと出力に{"lazy": 1}が加わります。
 
 
 設定例 >
 	nnoremap <silent>,bl    :<C-u>NebulaPutLazy<CR>
 	nnoremap <silent>,bc    :<C-u>NebulaPutCongig<CR>
+	nnoremap <silent>,bo    :<C-u>NebulaYankOptions<CR>
 
 
 ------------------------------------------------------------------------------
@@ -88,10 +95,11 @@ nebula#put_lazy()				*nebula#put_lazy*
 <	コマンドの整形は各自で行ってください。
 
 
-nebula#put_config()				*nebula#put_config*
+nebula#put_config({is-lazy})			*nebula#put_config*
 	vimrcなどの NeoBundle {repository} のコマンドが書かれた行で実行すると
-	そのプラグインを|neobundle#config()|でlazy設定するコマンドが次の行に出
-	力されます。
+	そのプラグインを|neobundle#config()|でlazy autoload設定するコマンドが
+	次の行に出力されます。
+	{is-lazy}が非0だと挿入されるオプションに{"lazy": 1}が加わります。
 	例: >
 		NeoBundle 'kana/vim-smartword'
 <			↓ >
@@ -99,6 +107,18 @@ nebula#put_config()				*nebula#put_config*
 		\ {'lazy': 1, 'autoload':
 		\ {'mappings': [['sxno', '<Plug>(smartword-']]}})
 <	コマンドの整形は各自で行ってください。
+
+
+nebula#yank_options({is-lazy})			*nebula#yank_options*
+	vimrcなどの NeoBundle {repository} のコマンドが書かれた行で実行すると
+	そのプラグインをlazy autoloadするときのオプションがレジスタに入ります
+	。
+	{is-lazy}が非0だと挿入されるオプションに{"lazy": 1}が加わります。
+	例: >
+		NeoBundle 'kana/vim-smartword'
+<			↓ >
+	{'lazy': 1, 'autoload': {'mappings': [['sxno', '<Plug>(smartword-']]}}
+<		がyankされる。
 
 
 nebula#get_bundle()				*nebula#get_bundle*
