@@ -64,7 +64,7 @@ https://github.com/LeafCage/nebula.vim
 	|nebula#put_lazy()|を呼びます。
 
 
-:NebulaPutCongig[!]				*:NebulaPutCongig*
+:NebulaPutConfig[!]				*:NebulaPutConfig*
 	|nebula#put_config()|を呼びます。
 	!付きだと出力に{"lazy": 1}が加わります。
 
@@ -76,7 +76,7 @@ https://github.com/LeafCage/nebula.vim
 
 設定例 >
 	nnoremap <silent>,bl    :<C-u>NebulaPutLazy<CR>
-	nnoremap <silent>,bc    :<C-u>NebulaPutCongig<CR>
+	nnoremap <silent>,bc    :<C-u>NebulaPutConfig<CR>
 	nnoremap <silent>,bo    :<C-u>NebulaYankOptions<CR>
 
 
