@@ -125,7 +125,7 @@ function! nebula#fetch_options(...) "{{{
     return {}
   endif
   let rootpath = bundle.path
-  let elements = uptodate#vimelements#collect(rootpath, ['commands', 'keymappings', 'autocmds', 'unitesources'])
+  let elements = lib#vimelements#collect(rootpath, ['commands', 'keymappings', 'autocmds', 'unitesources'])
   let optiongetter = s:new_optiongetter(elements.elements)
   let nb_options = {}
   call extend(nb_options, optiongetter.get_augroup())

@@ -1,17 +1,17 @@
-"UPTODATE: 1378890462.
-if uptodate#uptodate#isnot_this_uptodate(expand('<sfile>:p'))
+"UPTODATE: 1378923547.
+if lib#uptodate#isnot_this_uptodate(expand('<sfile>:p'))
   finish
 endif
 if exists('s:save_cpo')| finish| endif
 let s:save_cpo = &cpo| set cpo&vim
 "=============================================================================
-let s:IGNORE_MONODIR = 'uptodate'
+let s:IGNORE_MONODIR = 'lib'
 let s:pathholder = {'pluginname': '', 'realname': '', 'rootpath': '', 'is_monoplugin': 0}
 "realname: _find_actualname()で見つける前の名前の方がプラグイン名としては適切
 "   なものがあるのでこれに待避させる。
 "is_monoplugin: 対象がpluginspluginならfileをうまく取ってこないことがあるので、
 "   autoload/以下に1つしかdirがないときは全てのファイルを取得するようにする。
-function! uptodate#vimelements#new_pathholder(...)
+function! lib#vimelements#new_pathholder(...)
   let path = get(a:, 1, expand('%:p'))
   let collecttargets = get(a:, 2, [])
   let pathholder = {'is_failinit': 1}
@@ -328,7 +328,7 @@ endfunction
 
 "========================================================
 "Main
-function! uptodate#vimelements#collect(...)
+function! lib#vimelements#collect(...)
   let [pathholder, collecttargets] = s:_collect_varargs(a:000)
   let elementholder = s:new_elementholder()
   let [s:_var_order, s:_command_order, s:_keymapping_order] = [0, 0, 0]
@@ -355,11 +355,11 @@ function! s:_collect_varargs(varargs) "{{{
   let type0 = type(get(a:varargs, 0, 0))
   let COLLECTTARGETS = ['variables', 'commands', 'keymappings', 'functions', 'autocmds']
   if len>=2
-    return type0==type({}) ? [a:varargs[0], a:varargs[1]] : [uptodate#vimelements#new_pathholder(a:varargs[0], a:varargs[1]), a:varargs[1]]
+    return type0==type({}) ? [a:varargs[0], a:varargs[1]] : [lib#vimelements#new_pathholder(a:varargs[0], a:varargs[1]), a:varargs[1]]
   elseif len
-    return type0==type([]) ? [uptodate#vimelements#new_pathholder(expand('%:p'), a:varargs[0]), a:varargs[0]] : type0==type({}) ? [a:varargs[0], COLLECTTARGETS] : [uptodate#vimelements#new_pathholder(a:varargs[0]), COLLECTTARGETS]
+    return type0==type([]) ? [lib#vimelements#new_pathholder(expand('%:p'), a:varargs[0]), a:varargs[0]] : type0==type({}) ? [a:varargs[0], COLLECTTARGETS] : [lib#vimelements#new_pathholder(a:varargs[0]), COLLECTTARGETS]
   else
-    return [uptodate#vimelements#new_pathholder(), COLLECTTARGETS]
+    return [lib#vimelements#new_pathholder(), COLLECTTARGETS]
   endif
 endfunction
 "}}}
