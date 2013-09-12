@@ -90,13 +90,13 @@ function! nebula#put_lazy() "{{{
   return elements
 endfunction
 "}}}
-function! nebula#put_config(is_lazy) "{{{
+function! nebula#put_config(do_addlazy) "{{{
   let bundle = nebula#get_bundle()
   if bundle == {}
     return {}
   endif
   let [nb_options, elements] = nebula#fetch_options(bundle)
-  if a:is_lazy
+  if a:do_addlazy
     let nb_options.lazy = 1
   endif
   let line = printf('call neobundle#config(''%s'', %s)', bundle.name, string(nb_options))
@@ -105,13 +105,13 @@ function! nebula#put_config(is_lazy) "{{{
   return elements
 endfunction
 "}}}
-function! nebula#yank_options(is_lazy) "{{{
+function! nebula#yank_options(do_addlazy) "{{{
   let bundle = nebula#get_bundle()
   if bundle == {}
     return {}
   endif
   let [nb_options, elements] = nebula#fetch_options(bundle)
-  if a:is_lazy
+  if a:do_addlazy
     let nb_options.lazy = 1
   endif
   let @" = string(nb_options)
@@ -120,7 +120,7 @@ function! nebula#yank_options(is_lazy) "{{{
 endfunction
 "}}}
 function! nebula#put_from_clipboard() "{{{
-  let line = printf('NeoBundle ''%s''', @+)
+  let line = printf('NeoBundle ''%s''', substitute(@+, "\n", '', ''))
   call append('.', line)
   norm! +
 endfunction
