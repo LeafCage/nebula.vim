@@ -119,6 +119,12 @@ function! nebula#yank_options(is_lazy) "{{{
   return elements
 endfunction
 "}}}
+function! nebula#put_from_clipboard() "{{{
+  let line = printf('NeoBundle ''%s''', @+)
+  call append('.', line)
+  norm! +
+endfunction
+"}}}
 function! nebula#fetch_options(...) "{{{
   let bundle = a:0 ? a:1 : nebula#get_bundle()
   if bundle == {}

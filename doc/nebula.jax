@@ -27,7 +27,7 @@ License : MIT license  {{{
 概要				|nebula-introduction|
 インターフェイス		|nebula-interface|
   コマンド			  |nebula-commands|
-  関数				  |nebula-functions|
+設定例				|nebula-examples|
 問題点				|nebula-issues|
 
 
@@ -58,32 +58,8 @@ https://github.com/LeafCage/nebula.vim
 インターフェイス				*nebula-interface*
 
 ------------------------------------------------------------------------------
-コマンド					*nebula-commands*
-
+コマンド					*nebula-commands* 
 :NebulaPutLazy					*:NebulaPutLazy*
-	|nebula#put_lazy()|を呼びます。
-
-
-:NebulaPutConfig[!]				*:NebulaPutConfig*
-	|nebula#put_config()|を呼びます。
-	!付きだと出力に{"lazy": 1}が加わります。
-
-
-:NebulaYankOptions[!]				*:NebulaYankOptions*
-	|nebula#yank_options()|を呼びます。
-	!付きだと出力に{"lazy": 1}が加わります。
-
-
-設定例 >
-	nnoremap <silent>,bl    :<C-u>NebulaPutLazy<CR>
-	nnoremap <silent>,bc    :<C-u>NebulaPutConfig<CR>
-	nnoremap <silent>,bo    :<C-u>NebulaYankOptions<CR>
-
-
-------------------------------------------------------------------------------
-関数						*nebula-functions*
-
-nebula#put_lazy()				*nebula#put_lazy*
 	vimrcなどの NeoBundle {repository} のコマンドが書かれた行で実行すると
 	そのプラグインの NeoBundleLazy 設定がされたコマンドが次の行に出力され
 	ます。元の行は残っているので不要なら削除するのを忘れないこと。
@@ -95,11 +71,11 @@ nebula#put_lazy()				*nebula#put_lazy*
 <	コマンドの整形は各自で行ってください。
 
 
-nebula#put_config({is-lazy})			*nebula#put_config*
+:NebulaPutConfig[!]				*:NebulaPutConfig*
 	vimrcなどの NeoBundle {repository} のコマンドが書かれた行で実行すると
 	そのプラグインを|neobundle#config()|でlazy autoload設定するコマンドが
 	次の行に出力されます。
-	{is-lazy}が非0だと挿入されるオプションに{"lazy": 1}が加わります。
+	!付きだと挿入されるオプションに{"lazy": 1}が加わります。
 	例: >
 		NeoBundle 'kana/vim-smartword'
 <			↓ >
@@ -109,22 +85,31 @@ nebula#put_config({is-lazy})			*nebula#put_config*
 <	コマンドの整形は各自で行ってください。
 
 
-nebula#yank_options({is-lazy})			*nebula#yank_options*
+:NebulaYankOptions[!]				*:NebulaYankOptions*
 	vimrcなどの NeoBundle {repository} のコマンドが書かれた行で実行すると
 	そのプラグインをlazy autoloadするときのオプションがレジスタに入ります
 	。
-	{is-lazy}が非0だと挿入されるオプションに{"lazy": 1}が加わります。
+	!付きだとYankされるオプションに{"lazy": 1}が加わります。
 	例: >
 		NeoBundle 'kana/vim-smartword'
 <			↓ >
 	{'lazy': 1, 'autoload': {'mappings': [['sxno', '<Plug>(smartword-']]}}
-<		がyankされる。
+<		がyankされます。
 
 
-nebula#get_bundle()				*nebula#get_bundle*
-	vimrcなどの NeoBundle {repository} のコマンドが書かれた行で実行すると
-	そのプラグインの|neobundle#get()|で取得した、現在のneobundleでの設定値
-	(bundle (辞書))を返します。
+:NebulaPutFromClipboard				*:NebulaPutFromClipboard*
+	現在のOSのクリップボードに保存されているテキスト(|@+|レジスタ)の内容を
+	NeoBundle {clipboard-text}	という形に整形して次の行に出力します。
+	新しいプラグインのインストール時にご利用ください。
+
+
+==============================================================================
+設定例						*nebula-examples*
+>
+	nnoremap <silent>,bl    :<C-u>NebulaPutLazy<CR>
+	nnoremap <silent>,bc    :<C-u>NebulaPutConfig<CR>
+	nnoremap <silent>,bo    :<C-u>NebulaYankOptions<CR>
+	nnoremap <silent>,bp    :<C-u>NebulaPutFromClipboard<CR>
 
 
 ==============================================================================
