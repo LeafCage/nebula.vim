@@ -120,7 +120,7 @@ function! nebula#yank_options(do_addlazy) "{{{
 endfunction
 "}}}
 function! nebula#put_from_clipboard() "{{{
-  let line = printf('NeoBundle ''%s''', substitute(@+, "\n", '', ''))
+  let line = printf('NeoBundle ''%s''', substitute(@+, '\_s', '', 'g'))
   call append('.', line)
   norm! +
 endfunction
