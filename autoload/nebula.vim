@@ -78,11 +78,11 @@ endfunction
 "=============================================================================
 "Main
 function! nebula#put_lazy() "{{{
-  let bundle = nebula#get_bundle()
+  let bundle = nebula#_get_bundle()
   if bundle == {}
     return {}
   endif
-  let [nb_options, elements] = nebula#fetch_options(bundle)
+  let [nb_options, elements] = nebula#_fetch_options(bundle)
   let orig_name = bundle.orig_name
   let line = printf('NeoBundleLazy ''%s'', %s', orig_name, string(nb_options))
   call append('.', line)
@@ -91,11 +91,11 @@ function! nebula#put_lazy() "{{{
 endfunction
 "}}}
 function! nebula#put_config(do_addlazy) "{{{
-  let bundle = nebula#get_bundle()
+  let bundle = nebula#_get_bundle()
   if bundle == {}
     return {}
   endif
-  let [nb_options, elements] = nebula#fetch_options(bundle)
+  let [nb_options, elements] = nebula#_fetch_options(bundle)
   if a:do_addlazy
     let nb_options.lazy = 1
   endif
@@ -106,11 +106,11 @@ function! nebula#put_config(do_addlazy) "{{{
 endfunction
 "}}}
 function! nebula#yank_options(do_addlazy) "{{{
-  let bundle = nebula#get_bundle()
+  let bundle = nebula#_get_bundle()
   if bundle == {}
     return {}
   endif
-  let [nb_options, elements] = nebula#fetch_options(bundle)
+  let [nb_options, elements] = nebula#_fetch_options(bundle)
   if a:do_addlazy
     let nb_options.lazy = 1
   endif
@@ -125,8 +125,20 @@ function! nebula#put_from_clipboard() "{{{
   norm! +
 endfunction
 "}}}
-function! nebula#fetch_options(...) "{{{
-  let bundle = a:0 ? a:1 : nebula#get_bundle()
+function! nebula#yank_tap(append_folding) "{{{
+  let bundle = nebula#_get_bundle()
+  if bundle == {}
+    return {}
+  endif
+  let str = a:append_folding ? "if neobundle#tap('". bundle.name. "') \"{{{\nendif\n\"}}}"
+    \ : "if neobundle#tap('". bundle.name. "')\nendif"
+  call setreg('"', str, 'V')
+  ec 'Yanked : '. strtrans(@")
+endfunction
+"}}}
+
+function! nebula#_fetch_options(...) "{{{
+  let bundle = a:0 ? a:1 : nebula#_get_bundle()
   if bundle == {}
     return {}
   endif
@@ -146,7 +158,7 @@ function! nebula#fetch_options(...) "{{{
   return [nb_options, elements]
 endfunction
 "}}}
-function! nebula#get_bundle() "{{{
+function! nebula#_get_bundle() "{{{
   let bundlename = s:_get_bundlename()
   if !exists('*neobundle#get')
     echohl WarningMsg| echo 'neobundleが利用できません。'| echohl NONE
