@@ -1,5 +1,6 @@
 if exists('s:save_cpo')| finish| endif
 let s:save_cpo = &cpo| set cpo&vim
+scriptencoding utf-8
 "=============================================================================
 let s:optiongetter = {}
 function! s:new_optiongetter(elements)
