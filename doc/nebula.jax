@@ -86,6 +86,10 @@ https://github.com/LeafCage/nebula.vim
 	! 付きだと挿入されるオプションに{"lazy": 1}が加わります。
 
 
+:NebulaYankConfig[!]				*:NebulaYankConfig*
+	|:NebulaPutConfig|と同じ内容をputする代わりにレジスタにセットします。
+
+
 :NebulaYankOptions[!]				*:NebulaYankOptions*
 	vimrcなどの NeoBundle {repository} のコマンドが書かれた行で実行すると
 	そのプラグインをlazy autoloadするときのオプションがレジスタに入ります

@@ -106,6 +106,21 @@ function! nebula#put_config(do_addlazy) "{{{
   return elements
 endfunction
 "}}}
+function! nebula#yank_config(do_addlazy) "{{{
+  let bundle = nebula#_get_bundle()
+  if bundle == {}
+    return {}
+  endif
+  let [nb_options, elements] = nebula#_fetch_options(bundle)
+  if a:do_addlazy
+    let nb_options.lazy = 1
+  endif
+  let line = printf('call neobundle#config(''%s'', %s)', bundle.name, string(nb_options))
+  call setreg('"', line, 'V')
+  ec 'Yanked : '. @"
+  return elements
+endfunction
+"}}}
 function! nebula#yank_options(do_addlazy) "{{{
   let bundle = nebula#_get_bundle()
   if bundle == {}
