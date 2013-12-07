@@ -108,10 +108,10 @@ https://github.com/LeafCage/nebula.vim
 	新しいプラグインのインストール時にご利用ください。
 
 
-:NebulaYankTap[!]				*:NebulaYankTap*
-	vimrcなどの NeoBundle {repository} のコマンドが書かれた行で実行すると
-	そのプラグインの名前で|neobundle#tap()|するための行がレジスタにセット
-	されます。
+:NebulaYankTap[!] [{name}]			*:NebulaYankTap*
+	{name}が与えられたときにはその名前の|neobundle#tap()|を、
+	そうでないときにはカーソル行の NeoBundle コマンドの解析の結果から得た
+	名前の|neobundle#tap()|を生成し、レジスタにセットします。
 	例: >
 		NeoBundle 'kana/vim-smartword'
 <			↓ >

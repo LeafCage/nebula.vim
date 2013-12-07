@@ -141,13 +141,18 @@ function! nebula#put_from_clipboard() "{{{
   norm! +
 endfunction
 "}}}
-function! nebula#yank_tap(append_folding) "{{{
-  let bundle = nebula#_get_bundle()
-  if bundle == {}
-    return {}
-  endif
-  let str = a:append_folding ? "if neobundle#tap('". bundle.name. "') \"{{{\nendif\n\"}}}"
-    \ : "if neobundle#tap('". bundle.name. "')\nendif"
+function! nebula#yank_tap(append_folding, bundlename) "{{{
+  if a:bundlename==''
+    let bundle = nebula#_get_bundle()
+    if bundle == {}
+      return {}
+    endif
+    let bundlename = bundle.name
+  else
+    let bundlename = a:bundlename
+  end
+  let str = a:append_folding ? "if neobundle#tap('". bundlename. "') \"{{{\nendif\n\"}}}"
+    \ : "if neobundle#tap('". bundlename. "')\nendif"
   call setreg('"', str, 'V')
   ec 'Yanked : '. strtrans(@")
 endfunction
