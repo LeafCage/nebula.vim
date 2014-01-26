@@ -4,9 +4,8 @@ scriptencoding utf-8
 "=============================================================================
 let s:optiongetter = {}
 function! s:new_optiongetter(elements)
-  let optiongetter = {}
+  let optiongetter = copy(s:optiongetter)
   call extend(optiongetter, a:elements)
-  call extend(optiongetter, s:optiongetter)
   return optiongetter
 endfunction
 function! s:optiongetter.get_augroup() "{{{
@@ -61,7 +60,7 @@ function! s:optiongetter.get_mappings(bundle) "{{{
   endfor
   if plugmapping_prefix!=''
     let short_mapping = [join(keys(filter(enable_modes, 'v:val')), ''), plugmapping_prefix]
-    return {'mappings': [extend(short_mapping, textobjmappings)]}
+    return {'mappings': extend([short_mapping], textobjmappings, 0)}
   endif
   call extend(mappings, textobjmappings)
   return mappings==[] ? {} : {'mappings': mappings}
