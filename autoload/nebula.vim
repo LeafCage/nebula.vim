@@ -163,7 +163,7 @@ function! nebula#_fetch_options(...) "{{{
     return {}
   endif
   let root = bundle.path
-  let elements = nebula_l#lim#pluginalz#analyze(root, ['commands', 'keymappings', 'autocmds', 'unitesources'])
+  let elements = nebula_l#lim#alzplugin#analyze(root, ['commands', 'keymappings', 'autocmds', 'unitesources'])
   let optiongetter = s:new_optiongetter(elements.elements)
   let nb_options = {}
   call extend(nb_options, optiongetter.get_augroup())
